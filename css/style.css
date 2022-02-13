@@ -1,7 +1,28 @@
-      /* Set the size of the div element that contains the map */
-      #map {
-        height: 400px;
-        /* The height is 400 pixels */
-        width: 100%;
-        /* The width is the width of the web page */
-      }
+html,
+body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+div {
+	width: 50%;
+	height: 50%;
+	float: left;
+}
+
+#div1 {
+	background: #DDD;
+}
+
+#div2 {
+	background: #AAA;
+}
+
+#div3 {
+	background: #777;
+}
+
+#div4 {
+	background: #444;
+}
