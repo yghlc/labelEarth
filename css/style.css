@@ -11,18 +11,76 @@ div {
 	float: left;
 }
 
-#div1 {
-	background: #DDD;
+#map {
+	width: 100%;
+	height: 100%;
 }
 
-#div2 {
-	background: #AAA;
+.info {
+	padding: 0px 0px;
+	font: 12px/14px Arial, Helvetica, sans-serif;
+	color: white;
+	background: rgba(52, 58, 64, 0.8);
+	box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+	border-radius: 5px;
+	text-align: left;
 }
 
-#div3 {
-	background: #777;
+.leaflet-popup-content-wrapper {
+    width: auto;
+    height: auto;
 }
 
-#div4 {
-	background: #444;
+/* export */
+.btn-group-sm>.btn, .btn-sm{
+	float: right;
+}
+
+/* tools */
+.leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar{
+	border: 0;
+	position: absolute;
+}
+
+.leaflet-draw-tooltip {
+    height: auto;
+    width: auto;
+}
+
+.leaflet-draw.leaflet-control {
+	position: absolute;
+	height: 200px;
+	width: 100px;
+}
+
+.leaflet-draw-section{
+	position: relative;
+	float: left;
+	height: 150px;
+	margin-right: 20px;
+}
+
+/* copyright*/
+.leaflet-container .leaflet-control-attribution, .leaflet-container .leaflet-control-scale {
+    font-size: 11px;
+    height: auto;
+    width: auto;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+/* zoom in and zoom out*/
+.leaflet-control-zoom.leaflet-bar.leaflet-control{
+	border: 0;
+	width: auto;
+	height: auto;
+	position: absolute;
+	right: 0px;
+	bottom: 15px;
+}
+
+#exportBtn {
+	color: #ffffff;
+	font-weight: bold;
 }
