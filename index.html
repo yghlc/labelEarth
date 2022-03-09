@@ -11,25 +11,23 @@
 		<title></title>
 	</head>
 	<body>
-
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.3/leaflet.draw.css" />
 		<link rel="stylesheet" type="text/css" href="./css/style.css" />
 
 		</head>
 		<body>
 			<!--The div element for the map -->
 			<div id="div1">
-				<iframe
-					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3728.5015489178463!2d-105.27133918435999!3d40.008037788317125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x8818daf751094c09!2zNDDCsDAwJzI4LjkiTiAxMDXCsDE2JzA4LjkiVw!5e1!3m2!1sen!2sus!4v1644778068525!5m2!1sen!2sus"
+				<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1950.428084417938!2d-150.96427868325944!3d68.88106998594964!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1646793974452!5m2!1sen!2sus" 
 					width=100% height=100% style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 			</div>
 
 			<div id="div2">
 				<iframe
-					src="https://livingatlas.arcgis.com/wayback/#active=26120&ext=-105.33579,39.98439,-105.20103,40.04598"
+					src="https://livingatlas.arcgis.com/wayback/#active=26120&ext=-150.96849,68.87931,-150.95027,68.88334"
 					width=100% height=100% style="border:0;"></iframe>
 			</div>
 
@@ -45,8 +43,17 @@
 			<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-			<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+			
+			<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.3/leaflet.draw.js"></script>
+			
+			<script src="./js/proj4.js"></script>
+			<script src="./js/proj4leaflet.js"></script>
+			
 			<script src="./js/index.js"></script>
+			
+			
+
+			
 		</body>
 </html>

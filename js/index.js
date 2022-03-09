@@ -1,11 +1,51 @@
-var mapcenter = [40.0080337, -105.2691505];
-var map = L.map('map', {
-	zoomControl: false
-}).setView(mapcenter, 11);
+// var map = L.map('map', {
+//   center: [68.88107, -150.96209],
+//   zoom: 11,
+//   zoomControl: false,
+//   crs: new L.Proj.CRS("EPSG:3413",
+// 	'+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs',
+// 	{
+// 		resolutions: [8192, 4096, 2048] // 3 example zoom level resolutions
+// 	}
+//   ),
+//   worldCopyJump: false
+// });
 
-var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+var map = L.map('map', {
+  center: [68.88207, -150.96], 
+  crs: L.CRS.EPSG3857, //default: L.CRS.EPSG3857
+  zoom: 16,
+  zoomControl: false,
+  worldCopyJump: true
+});
+
+// var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+//   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+// }).addTo(map);
+
+var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 }).addTo(map);
+
+proj4.defs('EPSG:3413',"+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
+
+// EPSG3413
+fetch('./layers/yolov4_output_epsg3413.geojson').then(function(response) {
+	return response.json()
+}).then(function(data) {
+	
+	L.Proj.geoJson(data, {
+	  style: function(){
+	    return { color: 'red' }
+	  }
+	}).addTo(map);
+	// L.geoJSON(data, {
+	//   style: function(){
+	//     return { color: 'red' }
+	//   }
+	// }).addTo(map)
+})
+
 
 // Zoom Control
 var zoomControl = L.control.zoom({
