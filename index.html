@@ -19,9 +19,11 @@
 
 		</head>
 		<body>
+
 			<!--The div element for the map -->
 			<div id="div1">
-				<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1950.428084417938!2d-150.96427868325944!3d68.88106998594964!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1646793974452!5m2!1sen!2sus" 
+				<iframe
+					src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1950.428084417938!2d-150.96427868325944!3d68.88106998594964!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1646793974452!5m2!1sen!2sus"
 					width=100% height=100% style="border:0;" allowfullscreen="" loading="lazy"></iframe>
 			</div>
 
@@ -36,24 +38,57 @@
 			</div>
 
 			<div id="div4">
-				
+				<label class="badge badge-secondary">
+					<h4>Forms</h4>
+				</label>
+				<form>
+					<div class="row mb-2">
+						<label for="user" class="col-sm-2 col-form-label">Username or Email: </label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="user" placeholder="email@example.com">
+						</div>
+					</div>
+
+					<div class="row mb-2">
+						<label for="coordinates" class="col-sm-2 col-form-label">Center Latitude and longitude: </label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="coordinates"
+								value="Example Center Latitude and longitude">
+						</div>
+					</div>
+
+					<div class="row mb-2">
+						<label for="sp" class="col-sm-2 col-form-label">Slump Possibility</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="sp" placeholder="Example Slump Possibility">
+						</div>
+					</div>
+
+					<div class="row mb-2">
+						<label for="note" class="col-sm-2 col-form-label">Note</label>
+						<div class="col-sm-10">
+							<textarea class="form-control" id="note" rows="3"></textarea>
+						</div>
+					</div>
+					<button class="btn btn-primary" type="submit">Previous</button>
+					<button class="btn btn-primary" type="submit">Submit and Next</button>
+				</form>
+
 			</div>
 
 
 			<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-			
+
 			<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.3/leaflet.draw.js"></script>
-			
+
 			<script src="./js/proj4.js"></script>
 			<script src="./js/proj4leaflet.js"></script>
-			
-			<script src="./js/index.js"></script>
-			
-			
+			<script src='https://unpkg.com/leaflet.imageoverlay.arrugator@1.0.0/dist/leaflet.imageoverlay.arrugator.js'>
+			</script>
 
-			
+			<script src="./js/index.js"></script>
 		</body>
 </html>

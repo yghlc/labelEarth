@@ -5,7 +5,13 @@ body {
 	margin: 0;
 }
 
-div {
+#div1,#div2,#div3 {
+	width: 50%;
+	height: 50%;
+	float: left;
+}
+
+#div4 {
 	width: 50%;
 	height: 50%;
 	float: left;
@@ -55,7 +61,7 @@ div {
 
 .leaflet-draw-section{
 	position: relative;
-	float: left;
+	/* float: left; */
 	height: 150px;
 	margin-right: 20px;
 }
@@ -65,7 +71,7 @@ div {
     font-size: 11px;
     height: auto;
     width: auto;
-    position: absolute;
+    /* position: absolute; */
     bottom: 0px;
     right: 0px;
 }

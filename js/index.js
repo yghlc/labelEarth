@@ -1,3 +1,19 @@
+var map = L.map('map', {
+	center: [68.88207, -150.96],
+	crs: L.CRS.EPSG3857, //default: L.CRS.EPSG3857
+	zoom: 16,
+	zoomControl: false,
+	worldCopyJump: true
+});
+
+var Esri_WorldImagery = L.tileLayer(
+	'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+		attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+	}).addTo(map);
+
+
+// EPSG3413
+
 // var map = L.map('map', {
 //   center: [68.88107, -150.96209],
 //   zoom: 11,
@@ -11,47 +27,63 @@
 //   worldCopyJump: false
 // });
 
-var map = L.map('map', {
-  center: [68.88207, -150.96], 
-  crs: L.CRS.EPSG3857, //default: L.CRS.EPSG3857
-  zoom: 16,
-  zoomControl: false,
-  worldCopyJump: true
-});
+// https://github.com/kartena/Proj4Leaflet
+proj4.defs('EPSG:3413',
+"+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
 
-// var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-//   attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
-// }).addTo(map);
-
-var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-}).addTo(map);
-
-proj4.defs('EPSG:3413',"+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
-
-// EPSG3413
 fetch('./layers/yolov4_output_epsg3413.geojson').then(function(response) {
 	return response.json()
 }).then(function(data) {
-	
+
 	L.Proj.geoJson(data, {
-	  style: function(){
-	    return { color: 'red' }
-	  }
+		style: function() {
+			return {
+				color: 'green'
+			}
+		}
 	}).addTo(map);
-	// L.geoJSON(data, {
-	//   style: function(){
-	//     return { color: 'red' }
-	//   }
-	// }).addTo(map)
 })
 
+// From EPSG3413 to EPSG3857 for visualization
+fetch('./layers/hillshade_HWline_sub1_xy.geojson').then(function(response) {
+	return response.json()
+}).then(function(data) {
+	var imageUrl = './layers/hillshade_HWline_sub1.png';
+	// get bounding coordinate
+	var topLeft = data.features[0].geometry.coordinates[0][0],
+		bottomLeft = data.features[0].geometry.coordinates[0][3],
+		upperRight = data.features[0].geometry.coordinates[0][1],
+		lowerRight = data.features[0].geometry.coordinates[0][2];
+
+	// https://github.com/IvanSanchez/Leaflet.ImageOverlay.Rotated
+	L.imageOverlay.arrugator(
+		imageUrl, {
+			controlPoints: [topLeft, bottomLeft, upperRight, lowerRight],
+			projector: proj4('EPSG:3413', 'EPSG:3857').forward,
+			epsilon: 1000000,
+			fragmentShader: "void main() { gl_FragColor = texture2D(uRaster, vUV); }",
+			padding: 0.1,
+		}
+	).addTo(map);
+	
+	L.Proj.geoJson(data, {
+		style: function() {
+			return {
+				color: 'red'
+			}
+		}
+	}).addTo(map);
+})
+
+//--------------------------------------------------------------------------------------------------------------------------
 
 // Zoom Control
 var zoomControl = L.control.zoom({
 	position: "bottomright"
 });
 zoomControl.addTo(map);
+
+//--------------------------------------------------------------------------------------------------------------------------
 
 // Leaflet Draw
 var drawnItems = new L.FeatureGroup();
@@ -160,20 +192,6 @@ map.on(L.Draw.Event.EDITED, function(event) {
 map.on(L.Draw.Event.DELETED, function(event) {
 	console.log(JSON.stringify(drawnItems.toGeoJSON()));
 });
-
-// Map Title
-// var title = new L.Control({
-// 	position: 'bottomleft'
-// });
-// title.onAdd = function(map) {
-// 	this._div = L.DomUtil.create('div', 'info');
-// 	this.update();
-// 	return this._div;
-// };
-// title.update = function() {
-// 	this._div.innerHTML = 'Create some features<br>with drawing tools<br>then export to geojson file'
-// };
-// title.addTo(map);
 
 // Export Button
 var showExport =
