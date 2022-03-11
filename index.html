@@ -38,42 +38,46 @@
 			</div>
 
 			<div id="div4">
-				<label class="badge badge-secondary">
-					<h4>Forms</h4>
-				</label>
-				<form>
-					<div class="row mb-2">
-						<label for="user" class="col-sm-2 col-form-label">Username or Email: </label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="user" placeholder="email@example.com">
-						</div>
+				<div id="forms">
+					<div class="row justify-content-center">
+						<h3 class="card-title">Forms</h3>
 					</div>
-
-					<div class="row mb-2">
-						<label for="coordinates" class="col-sm-2 col-form-label">Center Latitude and longitude: </label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="coordinates"
-								value="Example Center Latitude and longitude">
+					<form>
+						<div class="row">
+							<label for="user" class="col-sm-2 col-form-label">Username or Email: </label>
+							<div class="col-sm-10 mt-3">
+								<input type="text" class="form-control" id="user" placeholder="email@example.com">
+							</div>
 						</div>
-					</div>
 
-					<div class="row mb-2">
-						<label for="sp" class="col-sm-2 col-form-label">Slump Possibility</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="sp" placeholder="Example Slump Possibility">
+						<div class="row">
+							<label for="coordinates" class="col-sm-2 col-form-label">Center Latitude and longitude:
+							</label>
+							<div class="col-sm-10  mt-2">
+								<input type="text" class="form-control" id="coordinates"
+									placeholder="Example Center Latitude and longitude">
+							</div>
 						</div>
-					</div>
 
-					<div class="row mb-2">
-						<label for="note" class="col-sm-2 col-form-label">Note</label>
-						<div class="col-sm-10">
-							<textarea class="form-control" id="note" rows="3"></textarea>
+						<div class="row mb-2">
+							<label for="sp" class="col-sm-2 col-form-label">Slump Possibility</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="sp" placeholder="Example Slump Possibility">
+							</div>
 						</div>
-					</div>
-					<button class="btn btn-primary" type="submit">Previous</button>
-					<button class="btn btn-primary" type="submit">Submit and Next</button>
-				</form>
 
+						<div class="row mb-2">
+							<label for="note" class="col-sm-2 col-form-label">Note</label>
+							<div class="col-sm-10 mt-2">
+								<textarea class="form-control" id="note" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="row justify-content-center">
+							<button type="submit" class="btn btn-outline-primary mr-4 mt-3">Previous</button>
+							<button type="submit" class="btn btn-outline-primary ml-4 mt-3" onclick="submitAndNext()">Submit and Next</button>
+						</div>
+					</form>
+				</div>
 			</div>
 
 
@@ -85,6 +89,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.3/leaflet.draw.js"></script>
 
 			<script src="./js/proj4.js"></script>
+			<script src="./js/mapDraw.js"></script>
 			<script src="./js/proj4leaflet.js"></script>
 			<script src='https://unpkg.com/leaflet.imageoverlay.arrugator@1.0.0/dist/leaflet.imageoverlay.arrugator.js'>
 			</script>

@@ -27,54 +27,88 @@ var Esri_WorldImagery = L.tileLayer(
 //   worldCopyJump: false
 // });
 
+showHillShade(hillshade_name='hillshade_HWline_sub1')
+showYolov4(yolov4_name='yolov4_output_epsg3413')
+
+//--------------------------------------------------------------------------------------------------------------------------
+
+function submitAndNext(){
+	alert('submitAndNext')
+}
+//--------------------------------------------------------------------------------------------------------------------------
+
 // https://github.com/kartena/Proj4Leaflet
 proj4.defs('EPSG:3413',
 "+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs");
 
-fetch('./layers/yolov4_output_epsg3413.geojson').then(function(response) {
-	return response.json()
-}).then(function(data) {
-
-	L.Proj.geoJson(data, {
-		style: function() {
-			return {
-				color: 'green'
+function showYolov4(yolov4_name='yolov4_output_epsg3413'){
+	fetch('./layers/'+yolov4_name+'.geojson').then(function(response) {
+		return response.json()
+	}).then(function(data) {
+		// update center coordinates
+		updateInput(updateID='coordinates', updateText=calCenterCoordinates(data))
+		// add geoJson to map
+		L.Proj.geoJson(data, {
+			style: function() {
+				return {
+					color: 'green'
+				}
 			}
-		}
-	}).addTo(map);
-})
+		}).addTo(map);;
+	});
+}
 
-// From EPSG3413 to EPSG3857 for visualization
-fetch('./layers/hillshade_HWline_sub1_xy.geojson').then(function(response) {
-	return response.json()
-}).then(function(data) {
-	var imageUrl = './layers/hillshade_HWline_sub1.png';
-	// get bounding coordinate
-	var topLeft = data.features[0].geometry.coordinates[0][0],
-		bottomLeft = data.features[0].geometry.coordinates[0][3],
-		upperRight = data.features[0].geometry.coordinates[0][1],
-		lowerRight = data.features[0].geometry.coordinates[0][2];
-
-	// https://github.com/IvanSanchez/Leaflet.ImageOverlay.Rotated
-	L.imageOverlay.arrugator(
-		imageUrl, {
-			controlPoints: [topLeft, bottomLeft, upperRight, lowerRight],
-			projector: proj4('EPSG:3413', 'EPSG:3857').forward,
-			epsilon: 1000000,
-			fragmentShader: "void main() { gl_FragColor = texture2D(uRaster, vUV); }",
-			padding: 0.1,
-		}
-	).addTo(map);
+function showHillShade(hillshade_name='hillshade_HWline_sub1'){
+	// From EPSG3413 to EPSG3857 for visualization
+	fetch('./layers/'+hillshade_name+'_xy.geojson').then(function(response) {
+		return response.json()
+	}).then(function(data) {
+		
+		var imageUrl = './layers/'+hillshade_name+'.png';
+		// get bounding coordinate
+		var topLeft = data.features[0].geometry.coordinates[0][0],
+			bottomLeft = data.features[0].geometry.coordinates[0][3],
+			upperRight = data.features[0].geometry.coordinates[0][1],
+			lowerRight = data.features[0].geometry.coordinates[0][2];
+		
+		// add image to map
+		// https://github.com/IvanSanchez/Leaflet.ImageOverlay.Rotated
+		L.imageOverlay.arrugator(
+			imageUrl, {
+				controlPoints: [topLeft, bottomLeft, upperRight, lowerRight],
+				projector: proj4('EPSG:3413', 'EPSG:3857').forward,
+				epsilon: 1000000,
+				fragmentShader: "void main() { gl_FragColor = texture2D(uRaster, vUV); }",
+				padding: 0.1,
+			}
+		).addTo(map);
+		
+		// add bouding box to map
+		L.Proj.geoJson(data, {
+			style: function() {
+				return {
+					color: 'red'
+				}
+			}
+		}).addTo(map);
+	})
 	
-	L.Proj.geoJson(data, {
-		style: function() {
-			return {
-				color: 'red'
-			}
-		}
-	}).addTo(map);
-})
+};
 
+function calCenterCoordinates(geoJson){
+	var lng1 = geoJson.features[0].geometry.coordinates[0][0][0][0]
+	var lng2 = geoJson.features[0].geometry.coordinates[0][0][1][0]
+	var lat1 = geoJson.features[0].geometry.coordinates[0][0][0][1]
+	var lat2 = geoJson.features[0].geometry.coordinates[0][0][2][1]
+	var center_lng = (lng1 + lng2) / 2
+	var center_lat = (lat1 + lat2) / 2
+	return [center_lat, center_lng]
+}
+
+function updateInput(updateID='coordinates', updateText=''){
+	var updateID = document.getElementById(updateID);
+	updateID.value = updateText;
+}
 //--------------------------------------------------------------------------------------------------------------------------
 
 // Zoom Control
