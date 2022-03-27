@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "yolov4_output_epsg3413",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::3413" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1422 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2223806.0, 636012.0 ], [ -2223588.0, 636012.0 ], [ -2223588.0, 635846.0 ], [ -2223806.0, 635846.0 ], [ -2223806.0, 636012.0 ] ] ] } }
+]
+}
