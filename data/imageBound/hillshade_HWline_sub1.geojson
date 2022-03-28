@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "hillshade_HWline_sub1_bound",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::3413" } },
+"features": [
+{ "type": "Feature", "properties": { "raster": "hillshade_HWline_sub1.tif" }, "geometry": { "type": "Polygon", "coordinates": [ [ [ -2224118.0, 636222.0 ], [ -2223284.0, 636222.0 ], [ -2223284.0, 635548.0 ], [ -2224118.0, 635548.0 ], [ -2224118.0, 636222.0 ] ] ] } }
+]
+}
