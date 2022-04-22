@@ -12,4 +12,5 @@ function get_esriWayBackMap_url(){
     return map_url;
 }
 
-document.getElementById('div2WayBackMap').src = get_esriWayBackMap_url();
+// document.getElementById('div2WayBackMap').src = get_esriWayBackMap_url();
+document.getElementById('div2WayBackMap').src = '';
