@@ -43,6 +43,7 @@ function get_GoogleMap_url(lat, lon){
 
 function reload_GoogleMap_Frame(center_lat,center_lon){
     parent.document.getElementById('div1GoogleMap').src = get_GoogleMap_url(center_lat,center_lon);
+    // console.log('reload_GoogleMap_Frame');
 }
 
 function get_esriWayBackMap_url(lat, lon){
@@ -59,6 +60,19 @@ function get_esriWayBackMap_url(lat, lon){
 }
 function reload_esriWayBackMap_Frame(center_lat,center_lon){
     parent.document.getElementById('div2WayBackMap').src = get_esriWayBackMap_url(center_lat,center_lon);
+    // console.log('reload_esriWayBackMap_Frame');
+}
+
+function update_imageMap(img_info){
+    // send an event in "index.js" to reload the image map
+    let send_data = {'image_name':img_info.image_name,
+                    'center_lat':img_info.image_center_lat,
+                    'center_lon':img_info.image_center_lon,
+                    'user_name':username,
+                    'serUrl':serUrl}
+    const event = new CustomEvent('newItem',{detail:send_data});
+    // Dispatch the event to parent document.
+    parent.document.dispatchEvent(event);
 }
 
 // load the data and shows the first images after login
@@ -70,11 +84,16 @@ getOne_imageItem().then(img_info => {
         image_name.value  = img_info.image_name;
         reload_GoogleMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
         reload_esriWayBackMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
+        update_imageMap(img_info);
     }
 ).catch(error =>{ console.log(error)})
 
 // if submitAndNext is for button type="submit", it will refresh the entire page
 // if submitAndNext is for button type="button", it will not refresh the entire page
+
+// Listen for the event.
+// document.addEventListener('newItem', function (e)
+// { console.log(getNowstr(),'addEventListener: netItem')}, false);
 
 function submitAndNext(){
     // alert("submitAndNext in infoFormEdit");
@@ -83,7 +102,7 @@ function submitAndNext(){
 }
 
 function previousItem(){
-    alert("previous in infoFormEdit");
+    console.log("previous in infoFormEdit");
 }
 
 function NextItem(){
