@@ -1,6 +1,7 @@
 
 
 const serUrl = 'http://10.0.0.141/data/imageObjects';
+// const serUrl = "http://127.0.0.1:8000/imageObjects";
 
 // need user to login first, so we can get the username
 let username = 'huanglingcao'
@@ -78,6 +79,10 @@ function update_imageMap(img_info){
 // load the data and shows the first images after login
 // each time refresh this website page, will re-run this.
 getOne_imageItem().then(img_info => {
+        if (img_info.image_name === 'NotAvailable'){
+            console.log('No available image for this user')
+            return;
+        }
         console.log(getNowstr(),img_info);
         let image_name = document.getElementById('image_name');
         // image_name.value  = `Name: ${img_info.image_name}, Center Lat: ${img_info.image_center_lat}, Center Lon: ${img_info.image_center_lon}`;
@@ -88,17 +93,52 @@ getOne_imageItem().then(img_info => {
     }
 ).catch(error =>{ console.log(error)})
 
-// if submitAndNext is for button type="submit", it will refresh the entire page
-// if submitAndNext is for button type="button", it will not refresh the entire page
-
 // Listen for the event.
 // document.addEventListener('newItem', function (e)
 // { console.log(getNowstr(),'addEventListener: netItem')}, false);
 
+async function post_user_input(url){
+    if (document.getElementById('image_name').value === "undefined"){
+        alert('No image there!')
+        return;
+    }
+    let formdata = new FormData();
+    formdata.append("image_name", document.getElementById('image_name').value);
+    formdata.append("possibility", document.getElementById('objectPossibility').value);
+    formdata.append("user_note", document.getElementById('note').value);
+
+    let requestOptions = {
+        method: 'POST',
+        body: formdata,
+        redirect: 'follow'
+    };
+
+    // let response = await fetch(url, requestOptions);
+    // if (response.ok){
+    //     let meg = await response.text();
+    //     console.log(meg);
+    // }
+    // else {
+    //     console.log('SubmitAndNext in infoFormEdit failed');
+    // }
+     fetch(url, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('SubmitAndNext in infoFormEdit failed', error));
+}
+
+// if submitAndNext is for button type="submit", it will refresh the entire page
+// if submitAndNext is for button type="button", it will not refresh the entire page
+
 function submitAndNext(){
-    // alert("submitAndNext in infoFormEdit");
-    console.log("submitAndNext in infoFormEdit")
-    // reload_otherFrame();
+    let submitUrl = serUrl + `/${username}/submitImageObjects`;
+    post_user_input(submitUrl);
+    // fetch(post_user_input(submitUrl)).then(res =>{
+    //     console.log("in infoFormEdit, submitAndNext success",res.text());
+    // }).catch(error =>{
+    //     console.log("SubmitAndNext in infoFormEdit failed:",error);
+    // })
+
 }
 
 function previousItem(){
