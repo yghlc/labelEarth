@@ -1,6 +1,6 @@
 
 
-const serUrl = 'http://127.0.0.1:8000/imageObjects';
+const serUrl = 'http://10.0.0.141/data/imageObjects';
 
 // need user to login first, so we can get the username
 let username = 'huanglingcao'

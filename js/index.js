@@ -73,7 +73,10 @@ function redraw_image_map(ev_data){
 			}
 		).addTo(map);
 
-	}).catch(error => {alert(error)})
+	}).catch(error => {
+		// alert(error)
+		console.log('error in redraw_image_map', error);
+	})
 }
 
 function redraw_objects(ev_data){
@@ -85,12 +88,16 @@ function redraw_objects(ev_data){
 		L.Proj.geoJson(data, {
 			style: function() {
 				return {
+					fill: false,
 					color: 'green'
 				}
 			}
 		}).addTo(map);
 
-	}).catch(error => {alert(error)})
+	}).catch(error => {
+		// alert(error)
+		console.log('error in redraw_objects', error);
+	})
 
 }
 
