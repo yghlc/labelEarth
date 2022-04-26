@@ -79,14 +79,15 @@ function update_imageMap(img_info){
 // load the data and shows the first images after login
 // each time refresh this website page, will re-run this.
 getOne_imageItem().then(img_info => {
-        if (img_info.image_name === 'NotAvailable'){
-            console.log('No available image for this user')
-            return;
-        }
         console.log(getNowstr(),img_info);
         let image_name = document.getElementById('image_name');
         // image_name.value  = `Name: ${img_info.image_name}, Center Lat: ${img_info.image_center_lat}, Center Lon: ${img_info.image_center_lon}`;
         image_name.value  = img_info.image_name;
+        if (img_info.image_name === 'NotAvailable'){
+            console.log('No available image for this user');
+            alert('No available image for this user');  // not working here
+            return;
+        }
         reload_GoogleMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
         reload_esriWayBackMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
         update_imageMap(img_info);
@@ -98,7 +99,8 @@ getOne_imageItem().then(img_info => {
 // { console.log(getNowstr(),'addEventListener: netItem')}, false);
 
 async function post_user_input(url){
-    if (document.getElementById('image_name').value === "undefined"){
+    let img_name = document.getElementById('image_name').value;
+    if (img_name === "undefined" || img_name==='NotAvailable'){
         alert('No image there!')
         return;
     }
