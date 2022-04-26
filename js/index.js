@@ -43,7 +43,7 @@ function show_an_image(image_name){
 }
 
 function redraw_image_map(ev_data){
-	console.log('redraw_image_map',ev_data)
+	// console.log('redraw_image_map',ev_data)
 	// let send_data = {'image_name':img_info.image_name,
 	// 	'center_lat':img_info.image_center_lat,
 	// 	'center_lon':img_info.image_center_lon,
@@ -101,8 +101,16 @@ function redraw_objects(ev_data){
 
 }
 
+function pan_map(ev_data){
+	let center_lat = ev_data.center_lat;
+	let center_lon = ev_data.center_lon;
+	map.panTo([center_lat,center_lon]);
+}
+
+
 document.addEventListener('newItem', function (e) {
 	// console.log('index:','addEventListener: netItem',e);
+	pan_map(e.detail);
 	redraw_image_map(e.detail);
 	redraw_objects(e.detail);
 }, false);
