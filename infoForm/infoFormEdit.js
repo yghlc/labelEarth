@@ -1,9 +1,10 @@
 
 
-const serUrl = 'http://10.0.0.141/data/imageObjects';
+// const serUrl = 'http://10.0.0.141/data/imageObjects';
 // const serUrl = "http://127.0.0.1:8000/imageObjects";
+const serUrl = parent.window.location.origin + '/imageObjects';   //  '/data/imageObjects'
 
-console.log('I am trying to get user name!');
+// console.log('I am trying to get user name!');
 
 // need user to login first, so we can get the username
 let username = 'username'
