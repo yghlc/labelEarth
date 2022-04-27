@@ -3,8 +3,23 @@
 const serUrl = 'http://10.0.0.141/data/imageObjects';
 // const serUrl = "http://127.0.0.1:8000/imageObjects";
 
+console.log('I am trying to get user name!');
+
 // need user to login first, so we can get the username
-let username = 'huanglingcao'
+let username = 'username'
+const queryString = parent.window.location.search;
+const urlParams = new URLSearchParams(queryString);
+input_username = urlParams.get('username');
+if (input_username != null || input_username != 'undefined') {
+    console.log('username is:',input_username);
+    username = input_username;
+    document.getElementById('username').value = username;
+}
+
+// const
+// const urlParams = new URLSearchParams(queryString);
+// const username = urlParams.get('username')
+// console.log(username);
 
 function getNowstr(){
     let timeElapsed = Date.now();
