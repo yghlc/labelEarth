@@ -12,7 +12,7 @@ const queryString = parent.window.location.search;
 const urlParams = new URLSearchParams(queryString);
 input_username = urlParams.get('username');
 if (input_username != null || input_username != 'undefined') {
-    console.log('username is:',input_username);
+    // console.log('username is:',input_username);
     username = input_username;
     document.getElementById('username').value = username;
 }
@@ -73,9 +73,17 @@ function get_esriWayBackMap_url(lat, lon){
     let esriWayBack_urlLeft = "https://livingatlas.arcgis.com/wayback/#active=26120&ext=";
     let map_url;
     map_url = esriWayBack_urlLeft + `${min_lon},${min_lat},${max_lon},${max_lat}`;
+    console.log('esriWayBack url:',map_url)
     return map_url;
 }
 function reload_esriWayBackMap_Frame(center_lat,center_lon){
+    //TODO: need to solve a problem, when move the next images, the esriWayBackMap don't update
+    let frame = parent.document.getElementById("div2WayBackMap");
+    let frameDoc = frame.contentDocument || frame.contentWindow.document;
+
+    frameDoc.removeChild(frameDoc.documentElement);
+    // frameDoc.documentElement.innerHTML = "";
+
     parent.document.getElementById('div2WayBackMap').src = get_esriWayBackMap_url(center_lat,center_lon);
     // console.log('reload_esriWayBackMap_Frame');
 }
@@ -104,9 +112,21 @@ getOne_imageItem().then(img_info => {
             alert('No available image for this user');  // not working here
             return;
         }
-        reload_GoogleMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
-        reload_esriWayBackMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
-        update_imageMap(img_info);
+        try{
+            reload_GoogleMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
+        }catch (e) {
+            console.log(e)
+        }
+        try{
+            reload_esriWayBackMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
+        }catch (e) {
+            console.log(e)
+        }
+        try{
+            update_imageMap(img_info);
+        }catch (e){
+            console.log(e)
+        }
     }
 ).catch(error =>{ console.log(error)})
 
