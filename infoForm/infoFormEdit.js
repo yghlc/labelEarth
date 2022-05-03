@@ -78,13 +78,17 @@ function get_esriWayBackMap_url(lat, lon){
 }
 function reload_esriWayBackMap_Frame(center_lat,center_lon){
     //TODO: need to solve a problem, when move the next images, the esriWayBackMap don't update
-    let frame = parent.document.getElementById("div2WayBackMap");
-    let frameDoc = frame.contentDocument || frame.contentWindow.document;
+    parent.document.getElementById('div2WayBackMap').remove()
 
-    frameDoc.removeChild(frameDoc.documentElement);
-    // frameDoc.documentElement.innerHTML = "";
+    let new_iframe = parent.document.createElement("iframe");
+    new_iframe.id = 'div2WayBackMap';
+    new_iframe.src = get_esriWayBackMap_url(center_lat,center_lon);
+    new_iframe.width = "100%";
+    new_iframe.height = "100%";
+    new_iframe.style.border = "0";
+    parent.document.getElementById('div2').appendChild(new_iframe);
 
-    parent.document.getElementById('div2WayBackMap').src = get_esriWayBackMap_url(center_lat,center_lon);
+    // parent.document.getElementById('div2WayBackMap').src = get_esriWayBackMap_url(center_lat,center_lon);
     // console.log('reload_esriWayBackMap_Frame');
 }
 
