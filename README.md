@@ -6,5 +6,6 @@ A web-based tool for labeling objects on Earth Surface
 - [ ] codes for "previous" 
 - [ ] Save drawn polygons if available  
 - [ ] Add total number and image num, allowing user to jump to a new image by its number
+- [ ] screenshot of the two map iFrame and POST to server. 
 
 [//]: # (- [x] Venus)
