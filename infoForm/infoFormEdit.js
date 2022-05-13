@@ -101,6 +101,7 @@ function update_imageMap(img_info){
                     'serUrl':serUrl}
     const event = new CustomEvent('newItem',{detail:send_data});
     // Dispatch the event to parent document.
+    setTimeout(()=>{},500);
     parent.document.dispatchEvent(event);
 }
 
