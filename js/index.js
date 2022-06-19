@@ -11,6 +11,9 @@ var Esri_WorldImagery = L.tileLayer(
 		attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 	}).addTo(map);
 
+let added_object = null;
+let added_image = null;
+
 
 // EPSG3413
 
@@ -61,9 +64,13 @@ function redraw_image_map(ev_data){
 			upperRight = data.features[0].geometry.coordinates[0][1],
 			lowerRight = data.features[0].geometry.coordinates[0][2];
 
+		if (added_image !== null){
+			added_image.remove();
+			console.log('remove the previous added image (a raster)');
+		}
 		// add image to map
 		// https://github.com/IvanSanchez/Leaflet.ImageOverlay.Rotated
-		L.imageOverlay.arrugator(
+		added_image = L.imageOverlay.arrugator(
 			imageUrl, {
 				controlPoints: [topLeft, bottomLeft, upperRight, lowerRight],
 				projector: proj4('EPSG:3413', 'EPSG:3857').forward,
@@ -85,7 +92,11 @@ function redraw_objects(ev_data){
 	fetch(imageObjects).then(function(response) {
 		return response.json()
 	}).then(function(data) {
-		L.Proj.geoJson(data, {
+		if (added_object !== null) {
+			added_object.remove();
+			console.log('remove the previous added geoJson (a polygon)')
+		}
+		added_object = L.Proj.geoJson(data, {
 			style: function() {
 				return {
 					fill: false,
