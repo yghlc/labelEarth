@@ -101,8 +101,9 @@ function update_imageMap(img_info){
                     'serUrl':serUrl}
     const event = new CustomEvent('newItem',{detail:send_data});
     // Dispatch the event to parent document.
-    setTimeout(()=>{},500);
-    parent.document.dispatchEvent(event);
+    setTimeout(()=>{
+        parent.document.dispatchEvent(event);
+    },500);
 }
 
 // load the data and shows the first images after login
