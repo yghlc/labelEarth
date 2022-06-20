@@ -16,7 +16,7 @@ if (input_username != null || input_username != 'undefined') {
     username = input_username;
     document.getElementById('username').value = username;
 }
-
+let b_win_initiated = false;
 // const
 // const urlParams = new URLSearchParams(queryString);
 // const username = urlParams.get('username')
@@ -101,9 +101,15 @@ function update_imageMap(img_info){
                     'serUrl':serUrl}
     const event = new CustomEvent('newItem',{detail:send_data});
     // Dispatch the event to parent document.
-    setTimeout(()=>{
+    if (b_win_initiated === false){
+        setTimeout(()=>{
+            parent.document.dispatchEvent(event);
+        },500);
+        b_win_initiated = true;
+    }else{
         parent.document.dispatchEvent(event);
-    },500);
+    }
+
 }
 
 // load the data and shows the first images after login
