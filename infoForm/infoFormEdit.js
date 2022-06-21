@@ -112,6 +112,24 @@ function update_imageMap(img_info){
 
 }
 
+function update_three_panels(img_info){
+    try{
+        reload_GoogleMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
+    }catch (e) {
+        console.log(e)
+    }
+    try{
+        reload_esriWayBackMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
+    }catch (e) {
+        console.log(e)
+    }
+    try{
+        update_imageMap(img_info);
+    }catch (e){
+        console.log(e)
+    }
+}
+
 // load the data and shows the first images after login
 // each time refresh this website page, will re-run this.
 getOne_imageItem().then(img_info => {
@@ -124,21 +142,7 @@ getOne_imageItem().then(img_info => {
             alert('No available image for this user');  // not working here
             return;
         }
-        try{
-            reload_GoogleMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
-        }catch (e) {
-            console.log(e)
-        }
-        try{
-            reload_esriWayBackMap_Frame(img_info.image_center_lat,img_info.image_center_lon);
-        }catch (e) {
-            console.log(e)
-        }
-        try{
-            update_imageMap(img_info);
-        }catch (e){
-            console.log(e)
-        }
+        update_three_panels(img_info);
     }
 ).catch(error =>{ console.log(error)})
 
@@ -191,8 +195,33 @@ function submitAndNext(){
 
 }
 
+function get_previous_item(url){
+    fetch(url).then(response =>{
+        return response.json()
+    }).then( img_info =>{
+        if (img_info.image_name ==='NotAvailable'){
+            alert('No previous image !')
+            return;
+        }
+        // console.log('previous image info:',img_info)
+        // image_name, possibility and notes
+        document.getElementById('image_name').value = img_info.image_name;
+        if (img_info.possibility != null){
+            document.getElementById('objectPossibility').value = img_info.possibility;
+        }
+        if (img_info.user_note != null){
+            document.getElementById('note').value = img_info.user_note;
+        }
+
+        // update other three panels
+        update_three_panels(img_info)
+    }).catch(error => console.log('get_previous_item failed', error))
+}
+
 function previousItem(){
-    console.log("previous in infoFormEdit");
+    let current_image_name = document.getElementById('image_name').value;
+    let previousUrl = serUrl + `/${username}/previous/${current_image_name}`;
+    get_previous_item(previousUrl);
 }
 
 function NextItem(){
