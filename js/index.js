@@ -11,7 +11,7 @@ var Esri_WorldImagery = L.tileLayer(
 		attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 	}).addTo(map);
 
-let added_object = null;
+let added_polygon = null;
 let added_image = null;
 
 
@@ -87,11 +87,11 @@ function redraw_objects(ev_data){
 	fetch(imageObjects).then(function(response) {
 		return response.json()
 	}).then(function(data) {
-		if (added_object !== null) {
-			added_object.remove();
+		if (added_polygon !== null) {
+			added_polygon.remove();
 			console.log('remove the previous added geoJson (a polygon)')
 		}
-		added_object = L.Proj.geoJson(data, {
+		added_polygon = L.Proj.geoJson(data, {
 			style: function() {
 				return {
 					fill: false,
