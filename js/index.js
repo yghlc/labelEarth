@@ -14,6 +14,8 @@ var Esri_WorldImagery = L.tileLayer(
 let added_polygon = null;
 let added_image = null;
 
+let copied_polygon_json = null;
+var drawnItems = new L.FeatureGroup();
 
 // EPSG3413
 
@@ -81,9 +83,19 @@ function redraw_image_map(ev_data){
 	})
 }
 
+function remove_drawn_items(){
+	if (map.hasLayer(drawnItems)) {
+		// drawnItems.remove();   this is wrong.
+		drawnItems.eachLayer(function(layer) {
+			drawnItems.removeLayer(layer);
+		})
+	}
+}
+
 function redraw_objects(ev_data){
 	let serUrl = ev_data.serUrl
 	let imageObjects = serUrl + '/' + ev_data.image_name + '/' + 'imageobject';
+	remove_drawn_items();
 	fetch(imageObjects).then(function(response) {
 		return response.json()
 	}).then(function(data) {
@@ -92,14 +104,13 @@ function redraw_objects(ev_data){
 			console.log('remove the previous added geoJson (a polygon)')
 		}
 		added_polygon = L.Proj.geoJson(data, {
-			style: function() {
-				return {
-					fill: false,
-					color: 'green'
+			onEachFeature: function(feature, layer) {
+				layer.setStyle({fill: false, color: 'red', weight: 1});
+				drawnItems.addLayer(layer);
+				copied_polygon_json = JSON.stringify(drawnItems.toGeoJSON());
 				}
-			}
-		}).addTo(map);
 
+		}) //.addTo(map);
 	}).catch(error => {
 		// alert(error)
 		console.log('error in redraw_objects', error);
@@ -205,7 +216,7 @@ zoomControl.addTo(map);
 //--------------------------------------------------------------------------------------------------------------------------
 
 // Leaflet Draw
-var drawnItems = new L.FeatureGroup();
+
 map.addLayer(drawnItems);
 var drawControl = new L.Control.Draw({
 	edit: {
@@ -310,6 +321,15 @@ map.on(L.Draw.Event.EDITED, function(event) {
 // Object(s) deleted - update console log
 map.on(L.Draw.Event.DELETED, function(event) {
 	console.log(JSON.stringify(drawnItems.toGeoJSON()));
+});
+
+//draw:toolbaropened
+map.on('draw:toolbaropened', function(event) {
+	// console.log('toolbaropened');
+});
+
+map.on('draw:toolbarclosed', function(event) {
+	// console.log('toolbarclosed');
 });
 
 // Export Button
