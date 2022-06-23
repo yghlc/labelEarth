@@ -349,7 +349,7 @@ showExportButton.addTo(map);
 
 // Export to GeoJSON File
 function geojsonExport() {
-	let nodata = '{"type":"FeatureCollection","features":[]}';
+	// let nodata = '{"type":"FeatureCollection","features":[]}';
 	let jsonData = (JSON.stringify(drawnItems.toGeoJSON()));
 	let dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(jsonData);
 	let datenow = new Date();
@@ -358,10 +358,11 @@ function geojsonExport() {
 	let linkElement = document.createElement('a');
 	linkElement.setAttribute('href', dataUri);
 	linkElement.setAttribute('download', exportFileDefaultName);
-	if (jsonData == nodata) {
-		alert('No features are drawn');
-	} else {
-		linkElement.click();
+	// if (jsonData == nodata) {
+	if (jsonData === copied_polygon_json) {
+			alert('No changes to vector features');
+		} else {
+			linkElement.click();
 	}
 }
 
