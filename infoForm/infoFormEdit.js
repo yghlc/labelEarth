@@ -99,6 +99,9 @@ function update_imageMap(img_info){
                     'center_lon':img_info.image_center_lon,
                     'user_name':username,
                     'serUrl':serUrl}
+    if (img_info.edit_polygons !== undefined && img_info.edit_polygons !== null) {
+        send_data['edit_polygons'] = img_info.edit_polygons;
+    }
     const event = new CustomEvent('newItem',{detail:send_data});
     // Dispatch the event to parent document.
     if (b_win_initiated === false){
@@ -179,6 +182,16 @@ async function post_user_input(url){
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('SubmitAndNext in infoFormEdit failed', error));
+     return;
+}
+
+function post_save_edit_polygons(post_url){
+    // send an event in "index.js" to save the edited polygons
+    let send_data = {'post_url':post_url}
+    const event = new CustomEvent('uploadPolygons',{detail:send_data});
+    // Dispatch the event to parent document.
+    parent.document.dispatchEvent(event);
+
 }
 
 // if submitAndNext is for button type="submit", it will refresh the entire page
@@ -186,13 +199,13 @@ async function post_user_input(url){
 
 function submitAndNext(){
     let submitUrl = serUrl + `/${username}/submitImageObjects`;
-    post_user_input(submitUrl);
-    // fetch(post_user_input(submitUrl)).then(res =>{
-    //     console.log("in infoFormEdit, submitAndNext success",res.text());
-    // }).catch(error =>{
-    //     console.log("SubmitAndNext in infoFormEdit failed:",error);
-    // })
+    post_user_input(submitUrl).
+    then(()=>{
 
+        let img_name = document.getElementById('image_name').value;
+        let savePolygonsUrl = serUrl + `/${username}/savePolygons/${img_name}`;
+        post_save_edit_polygons(savePolygonsUrl);
+    }).catch(error =>{ console.log(error)})
 }
 
 function get_previous_item(url){

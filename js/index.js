@@ -95,6 +95,9 @@ function remove_drawn_items(){
 function redraw_objects(ev_data){
 	let serUrl = ev_data.serUrl
 	let imageObjects = serUrl + '/' + ev_data.image_name + '/' + 'imageobject';
+	if (ev_data.edit_polygons !== undefined && ev_data.edit_polygons !== null) {
+		imageObjects = serUrl + `/${ev_data.user_name}/imageobject/${ev_data.image_name}`;
+	}
 	remove_drawn_items();
 	fetch(imageObjects).then(function(response) {
 		return response.json()
@@ -365,6 +368,35 @@ function geojsonExport() {
 			linkElement.click();
 	}
 }
+
+function save_edited_polygons_to_server(ev_data){
+	let post_url = ev_data.post_url;
+
+	let jsonData = JSON.stringify(drawnItems.toGeoJSON());
+	if (jsonData !== copied_polygon_json) {
+		let headers = new Headers();
+		headers.append("Content-Type", "application/json");
+
+		let requestOptions = {
+			method: 'POST',
+			headers: headers,
+			body: jsonData,
+			redirect: 'follow'
+		};
+
+		fetch(post_url, requestOptions)
+			.then(response => response.text())
+			.then(result => console.log(result))
+			.catch(error => console.log('error', error));
+	}
+
+}
+
+document.addEventListener('uploadPolygons', function (e) {
+	// console.log('index:','addEventListener: netItem',e);
+	save_edited_polygons_to_server(e.detail);
+}, false);
+
 
 // TODO: change the style of the checkbox, making it easier to see and easier to use
 let hideImage = '<input type="checkbox" name="hideimage" id="hide_image" checked > <label>Image</label>';
