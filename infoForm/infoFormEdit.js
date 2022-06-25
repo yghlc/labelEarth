@@ -157,7 +157,7 @@ async function post_user_input(url){
     let img_name = document.getElementById('image_name').value;
     if (img_name === "undefined" || img_name==='NotAvailable'){
         alert('No image there!')
-        return;
+        return false;
     }
     let formdata = new FormData();
     formdata.append("image_name", document.getElementById('image_name').value);
@@ -178,11 +178,10 @@ async function post_user_input(url){
     // else {
     //     console.log('SubmitAndNext in infoFormEdit failed');
     // }
-     fetch(url, requestOptions)
+     return fetch(url, requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('SubmitAndNext in infoFormEdit failed', error));
-     return;
 }
 
 function post_save_edit_polygons(post_url){
@@ -200,8 +199,11 @@ function post_save_edit_polygons(post_url){
 function submitAndNext(){
     let submitUrl = serUrl + `/${username}/submitImageObjects`;
     post_user_input(submitUrl).
-    then(()=>{
-
+    then((res)=>{
+        // console.log('return from post_user_input:',res);
+        if (res === false){
+            return;
+        }
         let img_name = document.getElementById('image_name').value;
         let savePolygonsUrl = serUrl + `/${username}/savePolygons/${img_name}`;
         post_save_edit_polygons(savePolygonsUrl);
