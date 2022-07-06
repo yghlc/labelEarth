@@ -133,6 +133,13 @@ function update_three_panels(img_info){
     }
 }
 
+function update_user_input_status(img_info){
+    // console.log('update_user_input_status:',image_info);
+    let status = document.getElementById('status');
+    // status.value  = `Name: ${img_info.image_name}, Center Lat: ${img_info.image_center_lat}, Center Lon: ${img_info.image_center_lon}`;
+    status.value  = `contributed to ${img_info.contribution} images among ${img_info.image_count} ones, ranked at ${img_info.user_rank} (${img_info.total_user} users in total)`;
+}
+
 // load the data and shows the first images after login
 // each time refresh this website page, will re-run this.
 getOne_imageItem().then(img_info => {
@@ -140,6 +147,7 @@ getOne_imageItem().then(img_info => {
         let image_name = document.getElementById('image_name');
         // image_name.value  = `Name: ${img_info.image_name}, Center Lat: ${img_info.image_center_lat}, Center Lon: ${img_info.image_center_lon}`;
         image_name.value  = img_info.image_name;
+        update_user_input_status(img_info);
         if (img_info.image_name === 'NotAvailable'){
             console.log('No available image for this user');
             alert('No available image for this user');  // not working here
@@ -218,6 +226,7 @@ function get_previous_item(url){
             alert('No previous image !')
             return;
         }
+        update_user_input_status(img_info);
         // console.log('previous image info:',img_info)
         // image_name, possibility and notes
         document.getElementById('image_name').value = img_info.image_name;
