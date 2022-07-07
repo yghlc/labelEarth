@@ -399,7 +399,8 @@ document.addEventListener('uploadPolygons', function (e) {
 
 
 // TODO: change the style of the checkbox, making it easier to see and easier to use
-let hideImage = '<input type="checkbox" name="hideimage" id="hide_image" checked > <label>Image</label>';
+// let hideImage = '<input type="checkbox" name="hideimage" id="hide_image" checked > <label>Image</label>';
+let hideImage = '<label class="btn btn-primary btn-sm text-light"><input type="checkbox" name="hideimage" id="hide_image" checked style="vertical-align: middle"> Image</label>'
 let hideImageButton = new L.Control({position: "topright"});  // position: "bottomleft"
 hideImageButton.onAdd = function(map){
 	this._div = L.DomUtil.create('div');
