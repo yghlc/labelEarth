@@ -133,6 +133,9 @@ document.addEventListener('newItem', function (e) {
 	pan_map(e.detail);
 	redraw_image_map(e.detail);
 	redraw_objects(e.detail);
+
+	// set hide image button as true
+	document.getElementById("hide_image").checked = true;
 }, false);
 
 
@@ -398,7 +401,7 @@ document.addEventListener('uploadPolygons', function (e) {
 }, false);
 
 
-// TODO: change the style of the checkbox, making it easier to see and easier to use
+// change the style of the checkbox, making it easier to see and easier to use
 // let hideImage = '<input type="checkbox" name="hideimage" id="hide_image" checked > <label>Image</label>';
 let hideImage = '<label class="btn btn-primary btn-sm text-light"><input type="checkbox" name="hideimage" id="hide_image" checked style="vertical-align: middle"> Image</label>'
 let hideImageButton = new L.Control({position: "topright"});  // position: "bottomleft"
