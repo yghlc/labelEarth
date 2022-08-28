@@ -32,6 +32,13 @@ function meters_to_degrees_onEarth(distance){
     return (distance/6371000.0)*180.0/Math.PI;
 }
 
+let checkFetch = function(response){
+    if (! response.ok){
+        throw Error(response.statusText + ' : ' + response.url);
+    }
+    return response;
+}
+
 async function get_available_image(username){
     // wait and get image info: {image name, center lat, lon}
     let item_url = serUrl + '/' + username + '/' + 'getitem';
@@ -187,6 +194,7 @@ async function post_user_input(url){
     //     console.log('SubmitAndNext in infoFormEdit failed');
     // }
      return fetch(url, requestOptions)
+        .then(checkFetch)
         .then(response => response.text())
         .then(result => console.log(result))
         .catch(error => console.log('SubmitAndNext in infoFormEdit failed', error));
