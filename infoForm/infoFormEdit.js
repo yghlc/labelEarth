@@ -179,9 +179,20 @@ async function post_user_input(url){
     formdata.append("possibility", document.getElementById('objectPossibility').value);
     formdata.append("user_note", document.getElementById('note').value);
 
+    // form data to a json string
+    let json_object={};
+    formdata.forEach(function(value,key){
+        json_object[key] = value;
+    });
+    let json_data = JSON.stringify(json_object);
+
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
     let requestOptions = {
         method: 'POST',
-        body: formdata,
+        headers: headers,
+        body: json_data,
         redirect: 'follow'
     };
 
