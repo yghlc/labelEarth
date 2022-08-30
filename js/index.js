@@ -405,7 +405,7 @@ function save_userinput_to_server(ev_data){
 }
 
 document.addEventListener('submitInput', function (e) {
-	console.log('index:','submitInput: save_userinput_to_server',e);
+	// console.log('index:','submitInput: save_userinput_to_server',e);
 	save_userinput_to_server(e.detail);
 }, false);
 

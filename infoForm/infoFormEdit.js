@@ -150,7 +150,7 @@ function update_user_input_status(img_info){
 // load the data and shows the first images after login
 // each time refresh this website page, will re-run this.
 getOne_imageItem().then(img_info => {
-        console.log(getNowstr(),img_info);
+        // console.log(getNowstr(),img_info);
         let image_name = document.getElementById('image_name');
         // image_name.value  = `Name: ${img_info.image_name}, Center Lat: ${img_info.image_center_lat}, Center Lon: ${img_info.image_center_lon}`;
         image_name.value  = img_info.image_name;
