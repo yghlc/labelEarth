@@ -174,41 +174,53 @@ async function post_user_input(url){
         alert('No image there!')
         return false;
     }
-    let formdata = new FormData();
-    formdata.append("image_name", document.getElementById('image_name').value);
-    formdata.append("possibility", document.getElementById('objectPossibility').value);
-    formdata.append("user_note", document.getElementById('note').value);
 
-    // form data to a json string
-    let json_object={};
-    formdata.forEach(function(value,key){
-        json_object[key] = value;
-    });
-    let json_data = JSON.stringify(json_object);
+    // send event
+    let send_data = {'post_url':url,
+                     'image_name':document.getElementById('image_name').value,
+                     'possibility':document.getElementById('objectPossibility').value,
+                     'user_note':document.getElementById('note').value}
+    
+    const event = new CustomEvent('submitInput',{detail:send_data});
+    parent.document.dispatchEvent(event);
 
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
+    return true;
 
-    let requestOptions = {
-        method: 'POST',
-        headers: headers,
-        body: json_data,
-        redirect: 'follow'
-    };
+    // let formdata = new FormData();
+    // formdata.append("image_name", document.getElementById('image_name').value);
+    // formdata.append("possibility", document.getElementById('objectPossibility').value);
+    // formdata.append("user_note", document.getElementById('note').value);
 
-    // let response = await fetch(url, requestOptions);
-    // if (response.ok){
-    //     let meg = await response.text();
-    //     console.log(meg);
-    // }
-    // else {
-    //     console.log('SubmitAndNext in infoFormEdit failed');
-    // }
-     return fetch(url, requestOptions)
-        .then(checkFetch)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('SubmitAndNext in infoFormEdit failed', error));
+    // // form data to a json string
+    // let json_object={};
+    // formdata.forEach(function(value,key){
+    //     json_object[key] = value;
+    // });
+    // let json_data = JSON.stringify(json_object);
+
+    // let headers = new Headers();
+    // headers.append("Content-Type", "application/json");
+
+    // let requestOptions = {
+    //     method: 'POST',
+    //     headers: headers,
+    //     body: json_data,
+    //     redirect: 'follow'
+    // };
+
+    // // let response = await fetch(url, requestOptions);
+    // // if (response.ok){
+    // //     let meg = await response.text();
+    // //     console.log(meg);
+    // // }
+    // // else {
+    // //     console.log('SubmitAndNext in infoFormEdit failed');
+    // // }
+    //  return fetch(url, requestOptions)
+    //     .then(checkFetch)
+    //     .then(response => response.text())
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log('SubmitAndNext in infoFormEdit failed', error));
 }
 
 function post_save_edit_polygons(post_url){

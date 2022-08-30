@@ -372,6 +372,43 @@ function geojsonExport() {
 	}
 }
 
+function save_userinput_to_server(ev_data){
+
+	let url = ev_data.post_url;
+
+	let formdata = new FormData();
+    formdata.append("image_name", ev_data.image_name);
+    formdata.append("possibility", ev_data.possibility);
+    formdata.append("user_note", ev_data.user_note);
+
+    // form data to a json string
+    let json_object={};
+    formdata.forEach(function(value,key){
+        json_object[key] = value;
+    });
+    let json_data = JSON.stringify(json_object);
+
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    let requestOptions = {
+        method: 'POST',
+        headers: headers,
+        body: json_data,
+        redirect: 'follow'
+    };
+
+     return fetch(url, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('SubmitAndNext in infoFormEdit failed', error));
+}
+
+document.addEventListener('submitInput', function (e) {
+	console.log('index:','submitInput: save_userinput_to_server',e);
+	save_userinput_to_server(e.detail);
+}, false);
+
 function save_edited_polygons_to_server(ev_data){
 	let post_url = ev_data.post_url;
 
