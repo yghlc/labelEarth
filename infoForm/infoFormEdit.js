@@ -149,6 +149,8 @@ function update_user_input_status(img_info){
 
 // load the data and shows the first images after login
 // each time refresh this website page, will re-run this.
+let submit_button = document.getElementById('submitNext_button');
+submit_button.disabled = true;
 getOne_imageItem().then(img_info => {
         // console.log(getNowstr(),img_info);
         let image_name = document.getElementById('image_name');
@@ -163,6 +165,7 @@ getOne_imageItem().then(img_info => {
         update_three_panels(img_info);
     }
 ).catch(error =>{ console.log(error)})
+ .finally(()=>submit_button.disabled=false)
 
 // Listen for the event.
 // document.addEventListener('newItem', function (e)
@@ -250,6 +253,10 @@ function submitAndNext(){
 }
 
 function get_previous_item(url){
+
+    let previous_button = document.getElementById('previous_button');
+    previous_button.disabled = true;
+
     fetch(url).then(response =>{
         return response.json()
     }).then( img_info =>{
@@ -271,6 +278,7 @@ function get_previous_item(url){
         // update other three panels
         update_three_panels(img_info)
     }).catch(error => console.log('get_previous_item failed', error))
+      .finally(() => previous_button.disabled = false )
 }
 
 function previousItem(){
