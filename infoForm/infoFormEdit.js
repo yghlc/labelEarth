@@ -21,12 +21,24 @@ let b_win_initiated = false;
 // const urlParams = new URLSearchParams(queryString);
 // const username = urlParams.get('username')
 // console.log(username);
+let previous_button = document.getElementById('previous_button');
+let submit_button = document.getElementById('submitNext_button');
 
 function getNowstr(){
     let timeElapsed = Date.now();
     let now = new Date(timeElapsed);
     return now;
 }
+
+function disable_buttons(){
+    previous_button.disabled = true;
+    submit_button.disabled = true;
+}
+function enable_buttons(){
+    previous_button.disabled = false;
+    submit_button.disabled = false;
+}
+
 
 function meters_to_degrees_onEarth(distance){
     return (distance/6371000.0)*180.0/Math.PI;
@@ -149,8 +161,8 @@ function update_user_input_status(img_info){
 
 // load the data and shows the first images after login
 // each time refresh this website page, will re-run this.
-let submit_button = document.getElementById('submitNext_button');
-submit_button.disabled = true;
+
+disable_buttons();
 getOne_imageItem().then(img_info => {
         // console.log(getNowstr(),img_info);
         let image_name = document.getElementById('image_name');
@@ -165,7 +177,7 @@ getOne_imageItem().then(img_info => {
         update_three_panels(img_info);
     }
 ).catch(error =>{ console.log(error)})
- .finally(()=>submit_button.disabled=false)
+ .finally(()=> enable_buttons())
 
 // Listen for the event.
 // document.addEventListener('newItem', function (e)
@@ -240,6 +252,7 @@ function post_save_edit_polygons(post_url){
 
 function submitAndNext(){
     let submitUrl = serUrl + `/${username}/submitImageObjects`;
+    disable_buttons();
     post_user_input(submitUrl).
     then((res)=>{
         // console.log('return from post_user_input:',res);
@@ -250,12 +263,12 @@ function submitAndNext(){
         let savePolygonsUrl = serUrl + `/${username}/savePolygons/${img_name}`;
         post_save_edit_polygons(savePolygonsUrl);
     }).catch(error =>{ console.log(error)})
+        .finally(()=>enable_buttons())
 }
 
 function get_previous_item(url){
 
-    let previous_button = document.getElementById('previous_button');
-    previous_button.disabled = true;
+    disable_buttons();
 
     fetch(url).then(response =>{
         return response.json()
@@ -278,7 +291,7 @@ function get_previous_item(url){
         // update other three panels
         update_three_panels(img_info)
     }).catch(error => console.log('get_previous_item failed', error))
-      .finally(() => previous_button.disabled = false )
+      .finally(() => enable_buttons() )
 }
 
 function previousItem(){
