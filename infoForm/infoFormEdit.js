@@ -70,10 +70,13 @@ async function getOne_imageItem(){
 function get_GoogleMap_url(lat, lon){
     // let lat = 68.88106998594964;
     // let lon = -150.96427868325944;
-    let goo_urlLeft = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1950.428084417938!2d";
+    //
+    // set a large map size, avoid no image in the window: ref: https://andrewwhitby.com/2014/09/09/google-maps-new-embed-format/
+    let map_size = 4500.0;
+    let goo_urlLeft = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3";
     let goo_urlRight = "!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1646793974452!5m2!1sen!2sus";
     let googleMap_url;
-    googleMap_url = goo_urlLeft + String(lon) + "!3d" + String(lat) + goo_urlRight;
+    googleMap_url = goo_urlLeft + "!1d" + String(map_size) + "!2d" + String(lon) + "!3d" + String(lat) + goo_urlRight;
     return googleMap_url;
 }
 
