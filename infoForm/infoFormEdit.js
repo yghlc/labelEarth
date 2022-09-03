@@ -72,7 +72,7 @@ function get_GoogleMap_url(lat, lon){
     // let lon = -150.96427868325944;
     //
     // set a large map size, avoid no image in the window: ref: https://andrewwhitby.com/2014/09/09/google-maps-new-embed-format/
-    let map_size = 5000.0;
+    let map_size = 6000.0;
     let goo_urlLeft = "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3";
     let goo_urlRight = "!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2sus!4v1646793974452!5m2!1sen!2sus";
     let googleMap_url;
