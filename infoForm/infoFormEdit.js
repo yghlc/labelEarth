@@ -129,7 +129,7 @@ function update_imageMap(img_info){
     if (b_win_initiated === false){
         setTimeout(()=>{
             parent.document.dispatchEvent(event);
-        },500);
+        },1000);
         b_win_initiated = true;
     }else{
         parent.document.dispatchEvent(event);
