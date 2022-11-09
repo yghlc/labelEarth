@@ -1,5 +1,11 @@
 # labelEarth
-A web-based tool for labeling objects on Earth Surface
+A web-based tool for labeling objects on Earth Surface (A [demo](https://youtu.be/ly7QRXTiBaQ) on Youtube).
+
+<figure>
+<img src="figs/web_system_fig_trim.jpg" alt="Trulli" style="width:100%">
+<figcaption align = "center"><b>The crowdsourcing system integrates google satellite imagery (a), ESRI World Imagery Wayback (b), composited imagery derived from ArcticDEM (c), and a form (d) into a single window. In panel (c), users can add, edit, or remove lines, points, polygons, and rectangles using tools on the left, allowing users to add/edit/remove the bounding box of an object if it is a false negative/inaccurate result/false positive. Users can also hide the composited imagery by using the checkbox on the upper right. In panel (d), users can input the possibility (Yes, high, medium, low, and No) of an RTS and also comments. Users can use mouse (middle scroll) to zoom in/out in panel (c). </b></figcaption>
+</figure>
+
 
 ### TODO
 - [x] remove the old png after moving to a new location.
