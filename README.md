@@ -19,3 +19,19 @@ A web-based tool for labeling objects on Earth Surface (A [demo](https://youtu.b
 - [ ] After click submit, how to wait until the record is saved to database?
 
 [//]: # (- [x] Venus)
+
+
+### Citation
+If this repository is useful for your projects, please consider citing our papers:
+
+```
+@article{huang2023identifying,
+  title={Identifying active retrogressive thaw slumps from ArcticDEM},
+  author={Huang, Lingcao and Willis, Michael J and Li, Guiye and Lantz, Trevor C and Schaefer, Kevin and Wig, Elizabeth and Cao, Guofeng and Tiampo, Kristy F},
+  journal={ISPRS Journal of Photogrammetry and Remote Sensing},
+  volume={205},
+  pages={301--316},
+  year={2023},
+  publisher={Elsevier}
+}
+```
